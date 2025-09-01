@@ -1,27 +1,71 @@
-# 16x2_lcd_firmware_stm32f401
-lcd firmware for 16x2 lcd display for stm32f401. tested on stm32f401ccu6 using 4 gpio for data pins d4-d7
+# 16x2 LCD Firmware for STM32F401
 
-API DESCRIPTION
-The following functions are avaliable in the provided lcd files
-void LCD_Init(void);   													// initializes the the screen sends the necessary control words
-void LCD_SendCommand(uint8_t cmd);							// send command usually you wont need to use this
-void LCD_SendData(uint8_t data);								// sends data usually you wont need to use this either
-void LCD_PrintString(const char *str);					// prints whatever sting you pass to the function onto the lcd
-void LCD_SetCursor(uint8_t row, uint8_t col);		// sets the cursor to the specified location (0,0) is the top rows first column (1,0) is the second rows first column
-void LCD_Clear(void);														// clears the entie lcd
+This project provides a simple firmware library to drive a **16x2 LCD display** in 4-bit mode using an STM32F401.  
+Tested on **STM32F401CCU6** with GPIO pins connected to LCD data lines **D4–D7**.
 
+---
 
-USAGE
-1. Under the Core directory of your project
-	copy the lcd.h file into inc folder
- 	copy the lcd.c file into src folder
-2. In the main.c file do a #include "lcd.h" under the user includes section if using cubemx generated code.
-3. in the int main function of your project add the LCD_Init(); line before using the screen
-And youre good to go.
+## Features
+- Initialize and control a 16x2 character LCD.
+- Print strings directly to the display.
+- Set cursor position.
+- Clear the screen.
 
+---
 
- potential issues lcd does not respond well to 3.3V power so i would reccomend using 5V. using 3.3V it worked for me but gave contrast issues which made it unusable. maybe i just need the power rails to be 5V i havent looked into it.
+## API Reference
 
- Feel free to tell me about any mistakes i have made or any improvements i should make this is my first time showcasing my code like this!. <3
+```c
+void LCD_Init(void);    
+// Initializes the LCD and sends the necessary control words.
 
+void LCD_SendCommand(uint8_t cmd);    
+// Sends a command to the LCD (usually not needed directly).
 
+void LCD_SendData(uint8_t data);    
+// Sends raw data to the LCD (usually not needed directly).
+
+void LCD_PrintString(const char *str);    
+// Prints a null-terminated string to the LCD.
+
+void LCD_SetCursor(uint8_t row, uint8_t col);    
+// Sets the cursor to the specified location. 
+// (0,0) → top-left corner, (1,0) → bottom-left corner.
+
+void LCD_Clear(void);    
+// Clears the entire LCD screen.
+```
+
+---
+
+## Usage
+
+1. Under the **Core** directory of your STM32CubeIDE project:
+   - Copy `lcd.h` into the `Inc` folder.
+   - Copy `lcd.c` into the `Src` folder.
+
+2. In your `main.c`, add:
+   ```c
+   #include "lcd.h"
+   ```
+
+3. Inside `main()`:
+   ```c
+   LCD_Init();  // Initialize LCD before use
+   LCD_PrintString("Hello, World!");
+   ```
+
+And you're good to go! 🎉
+
+---
+
+## Notes / Potential Issues
+- The LCD does not always respond well at **3.3V power**.  
+  - Works at 3.3V but may cause contrast issues.  
+  - Recommended: power the LCD with **5V** for stable operation.  
+- Feedback and improvements are welcome — this is my first time showcasing code like this ❤️.  
+
+---
+
+## License
+[MIT License](LICENSE) – Feel free to use and modify.
